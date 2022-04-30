@@ -9,7 +9,6 @@ Once logged in, your user needs to be able to interact with all the items, shop,
 
 Here are the specific requirements once logged in:
 
-Items
 [] View all items in a category
 [] View all items in the user's shopping cart
 [] Add item from a category to their shopping cart
