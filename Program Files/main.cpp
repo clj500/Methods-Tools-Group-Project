@@ -46,11 +46,13 @@ int main()
 				//Prepare user to set up their username
 				string username;
 				bool userWorked = false;
-				bool checkUserExists = false;
+				bool checkUserExists;
 
 				//Creates a logical error right now
 				while (userWorked == false)
 				{
+					checkUserExists = false;
+
 					cout << "Enter your username: ";
 
 					cin >> username;
@@ -90,14 +92,73 @@ int main()
 
 			else
 			{
+				cout << "ERROR: Invalid command" << endl;
+			}
+		}
 
+		//User requests to login
+		else if (command1 == "login")
+		{
+			string username;
+			bool checkUserExists = false;
+
+			string password;
+			bool passwordMatches = false;
+
+			//Check for account input and that account with that username exists
+			if (tkn.readWord(username))
+			{
+				if (tkn.readWord(password))
+				{
+					for (int i = 0; i < UserList.size(); i++)
+					{
+						if (username == UserList[i].getUsername())
+						{
+							checkUserExists = true;
+							cout << UserList[i].getPassword();
+
+							if (password == UserList[i].getPassword())
+							{
+								passwordMatches = true;
+							}
+						}
+					}
+				}
+
+				//If account does exist, check that password is present and correct
+				if (checkUserExists == true)
+				{
+					if (passwordMatches == true)
+					{
+						cout << "Login successful" << endl;
+					}
+
+					else
+					{
+						cout << "ERROR: Incorrect password" << endl;
+					}
+				}
+
+				else
+				{
+					cout << "ERROR: An account does not exist with this username" << endl;
+				}
+			}
+
+			else
+			{
+				cout << "ERROR: Incomplete command" << endl;
 			}
 		}
 
 		//Displays a list of commands
 		else if (command1 == "help")
 		{
-			cout << "List of available commands: " << endl << "create account - initiates account creation" << endl << "exit - exits program" << endl;
+			cout << "List of available commands: " << endl 
+				<< "create account - initiates account creation" << endl 
+				<< "login <username> <password> - login to an existing account" << endl
+				<< "help - displays a list of valid commands" << endl 
+				<< "exit - exits program" << endl;
 		}
 
 		//Exits program
