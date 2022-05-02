@@ -1,6 +1,6 @@
 #include "Book.h"
 
-void Book::setAmountInStock(amountInStock)
+void Book::setAmountInStock(int amountInStock)
 {
     this->amountInStock = amountInStock;
 }
