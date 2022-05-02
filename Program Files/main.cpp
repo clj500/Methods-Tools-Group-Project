@@ -22,6 +22,8 @@ int main()
 	string user_input, command1, userLoggedIn;
 	vector<User> UserList;
 
+	//This is a test
+
 	Tokenizer tkn;
 
 	cout << "Welcome to 'The Book Store'" << endl << "Type help to pull up a list of commands" << endl;
