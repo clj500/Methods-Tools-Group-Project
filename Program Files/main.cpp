@@ -9,6 +9,11 @@ using namespace::std;
 
 #include "Tokenizer.h"
 #include "User.h"
+#include "Book.h"
+
+//vector<Book> books;
+//Book book = Book(123, 1, 1.01, "A Title", "An Author", "A Genre");
+//books.push_back(book);
 
 int main()
 {
