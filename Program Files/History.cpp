@@ -9,14 +9,8 @@ void History::displayOrderContent() {
             cout << "  Quantity - " << orderContent[i].getQuantity() << endl << endl;
         }
 }
-void History::setOrderId(int orderId) {
-    this->orderId = orderId;
-}
 int History::getUserId() {
     return userId;
-}
-int History::getOrderId() {
-    return orderId;
 }
 float History::getOrderTotal() {
     return orderTotal;
