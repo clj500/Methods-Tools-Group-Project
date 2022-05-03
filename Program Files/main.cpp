@@ -410,6 +410,14 @@ int main()
 				{
 					cout << endl << "'The Book Store'                            |   VIEW CATALOG   |   VIEW CART   | LOGOUT |" << endl
 						<< "----------------------------------------------------------------------------------------" << endl;
+					for(int i = 0; i < HistoryVector.size(); i++)
+					{
+						if(HistoryVector[i].getUserId() == userLoggedInId)
+						{
+							cout << "Order " << i + 1 << endl;
+							HistoryVector[i].displayOrderContent();
+						}
+					}
 				}
 
 				else
