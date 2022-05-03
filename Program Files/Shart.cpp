@@ -9,37 +9,48 @@ float Cart::getCartTotal()
     return cartTotal;
 }
 
-void Cart::addToCart(Book novel, int quantity)
+void Cart::addToCart(int bookISBN, int quantity, vector<Book> books)
 {
     bool exists = false;
 
     for (int i = 0; i < cartContents.size(); i++)
     {
-        if (cartContents[i].getTitle() == novel.getTitle())
+        if (cartContents[i].getIsbn() == bookISBN)
         {
             exists = true;
             cartContents[i].setQuantity(cartContents[i].getQuantity() + quantity);
+            
+            for (int i = 0; i < quantity; i++)
+            {
+                cartTotal += cartContents[i].getPrice();
+            }
         }
     }
 
     if (exists == false)
     {
-        novel.setQuantity(quantity);
-        cartContents.push_back(novel);
-    }
-    
-    for (int i = 0; i < quantity; i++)
-    {
-        cartTotal += novel.getPrice();
-         
+        for (int i = 0; i < books.size(); i++)
+        {
+            if (books[i].getIsbn() == bookISBN)
+            {
+                cout << "Adding " << books[i].getTitle() << " to cart" << endl;
+                books[i].setQuantity(quantity);
+                cartContents.push_back(books[i]);
+               
+                for (int i = 0; i < quantity; i++)
+                {
+                    cartTotal += books[i].getPrice();
+                }
+            }
+        }
     }
 }
 
-void Cart::removeBook(string bookName)
+void Cart::removeBook(int bookISBN)
 {
     for (int i = 0; i < cartContents.size(); i++)
     {
-        if (bookName == cartContents[i].getTitle())
+        if (bookISBN == cartContents[i].getIsbn())
         {
             cartContents[i].setQuantity(cartContents[i].getQuantity() - 1);
             cartTotal -= cartContents[i].getPrice();
@@ -56,7 +67,7 @@ void Cart::outputCartContents()
 {
     for (int i = 0; i < cartContents.size(); i++)
     {
-        cout << cartContents[i].getTitle() << " x" << cartContents[i].getQuantity() << " $" << cartContents[i].getPrice() << endl;
+        cout << cartContents[i].getTitle() << " x" << cartContents[i].getQuantity() << "         $" << cartContents[i].getPrice() << endl;
     }
 }
 

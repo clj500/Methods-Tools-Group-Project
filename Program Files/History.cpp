@@ -1,8 +1,8 @@
 #include "History.h"
 
 void History::displayOrderContent() {
-    orderContent.size
-        for (i = 0 : i < orderContent.size(); i++) {
+
+    for (int i = 0; i < orderContent.size(); i++) {
             cout << "Book" << i + 1 << endl;
             cout << "   Title - " << orderContent[i].getTitle() << endl;
             cout << "    ISBN - " << orderContent[i].getIsbn() << endl;
@@ -19,10 +19,13 @@ void History::displayOrderContent() {
 int History::getUserId() {
     return userId;
 }
+int History::getOrderId() {
+    return orderId;
+}
 string History::getDate() {
     return date;
 }
-int History::getOrderTotal() {
+float History::getOrderTotal() {
     return orderTotal;
 }
 string History::getTime() {

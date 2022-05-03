@@ -1,6 +1,11 @@
 #include "User.h"
 #include "Tokenizer.h"
 
+void User::setUserId(int userId)
+{
+	this->userId = userId;
+}
+
 void User::setUsername(string username)
 {
 	this->username = username;
@@ -48,6 +53,8 @@ void User::setShippingInfo()
 	shippingInfo.push_back(city);
 	shippingInfo.push_back(state);
 	shippingInfo.push_back(zip);
+
+	cout << endl;
 }
 
 void User::setPaymentInfo()
@@ -82,6 +89,13 @@ void User::setPaymentInfo()
 	paymentInfo.push_back(cardNumber);
 	paymentInfo.push_back(cvc);
 	paymentInfo.push_back(expiration);
+
+	filledOutInfo = true;
+}
+
+int User::getUserId()
+{
+	return userId;
 }
 
 string User::getUsername()
@@ -105,4 +119,9 @@ void User::getPaymentInfo()
 	cout << "Name: " << paymentInfo[0] << " " << paymentInfo[1] << endl;
 	cout << "Card Number: xxxx-xxxx-xxxx-" << paymentInfo[2] << endl;
 	cout << "CVC: " << paymentInfo[3] << "   Expiration Date:" << paymentInfo[4] << endl;
+}
+
+bool User::getFilledOutInfo()
+{
+	return filledOutInfo;
 }

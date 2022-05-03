@@ -15,8 +15,8 @@ private:
 public:
     Cart() : userId(0), cartTotal(0) {}
     Cart(int userId) : userId(userId), cartTotal(0) {}
-    void addToCart(Book novel, int quantity);
-    void removeBook(string bookName);
+    void addToCart(int bookISBN, int quantity, vector<Book> books);
+    void removeBook(int bookISBN);
     void outputCartContents();
     void checkoutCart();
     int getUserId();

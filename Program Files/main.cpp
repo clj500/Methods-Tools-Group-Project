@@ -20,22 +20,25 @@ int main()
 {
 	bool runProg = true;
 	bool LoggedIn = false;
+	int userLoggedInId;
 	string user_input, command1, userLoggedIn;
 	vector<User> UserList;
 	vector<Book> BookVector;
+	vector<Cart> CartVector;
 
-	Book book1(1, 10, 15.00, "Pet Sematary", "Stephen King", "Horror");
+	Book book1(1, 10, 20.00, "Pet Sematary", "Stephen King", "Horror");
 	Book book2(2, 10, 10.00, "Skippyjon Jones", "Judith Byron Schachner", "Kids");
-	Book book3(3, 10, 30.00, "book3", "cam", "horror");
-	Book book4(4, 10, 200.00, "book4", "cam", "horror");
+	Book book3(3, 10, 15.00, "The Outsiders", "S. E. Hinton", "Drama");
+	Book book4(4, 10, 20.00, "Nancy Drew", "Carolyn Keene", "Mystery");
+	Book book5(5, 10, 15.00, "book4", "cam", "horror");
 
 	BookVector.push_back(book1);
 	BookVector.push_back(book2);
 	BookVector.push_back(book3);
 	BookVector.push_back(book4);
+	BookVector.push_back(book5);
 
 	Tokenizer tkn;
-	Cart userCart(420);
 
 	//Output welcome screen
 	cout << "Welcome to 'The Book Store'                           |  CREATE ACCOUNT  | LOGIN | EXIT |" << endl
@@ -114,6 +117,11 @@ int main()
 					if (username == UserList[i].getUsername())
 					{
 						UserList[i].setPassword(password);
+						UserList[i].setUserId(i);
+
+						Cart userCart(UserList[i].getUserId());
+						CartVector.push_back(userCart);
+
 						tkn.clear();
 					}
 				}
@@ -128,6 +136,7 @@ int main()
 		//User requests to login
 		else if (command1 == "login")
 		{
+			int tempUserId;
 			string username;
 			bool checkUserExists = false;
 
@@ -147,6 +156,8 @@ int main()
 							{
 								checkUserExists = true;
 
+								tempUserId = UserList[i].getUserId();
+
 								if (password == UserList[i].getPassword())
 								{
 									passwordMatches = true;
@@ -159,9 +170,9 @@ int main()
 						{
 							if (passwordMatches == true)
 							{
-								cout << "Login successful" << endl;
 								LoggedIn = true;
 								userLoggedIn = username;
+								userLoggedInId = tempUserId;
 
 								cout << endl << "'The Book Store'                            |   VIEW CATALOG   |   VIEW CART   | LOGOUT |" << endl
 									<< "----------------------------------------------------------------------------------------" << endl;
@@ -262,19 +273,19 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				string bookName;
+				int bookISBN;
 
-				if (tkn.readWord(bookName))
+				if (tkn.readInteger(bookISBN))
 				{
 					int quantity;
 
 					if (tkn.readInteger(quantity))
 					{
-						for (int i = 0; i < BookVector.size(); i++)
+						for (int i = 0; i < CartVector.size(); i++)
 						{
-							if (bookName == BookVector[i].getTitle())
+							if (userLoggedInId == CartVector[i].getUserId())
 							{
-								userCart.addToCart(BookVector[i], quantity);
+								CartVector[i].addToCart(bookISBN, quantity, BookVector);
 							}
 						}
 					}
@@ -302,11 +313,23 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				string bookName;
+				int bookISBN;
 
-				if (tkn.readWord(bookName))
+				if (tkn.readInteger(bookISBN))
 				{
-					userCart.removeBook(bookName);
+					for (int i = 0; i < BookVector.size(); i++)
+					{
+						if (bookISBN == BookVector[i].getIsbn())
+						{
+							for (int i = 0; i < CartVector.size(); i++)
+							{
+								if (userLoggedInId == CartVector[i].getUserId())
+								{
+									CartVector[i].removeBook(bookISBN);
+								}
+							}
+						}
+					}
 				}
 
 				else
@@ -329,18 +352,18 @@ int main()
 
 			//User requests to view books
 			if (command2 == "catalog")
-			{
-				cout << endl << "'The Book Store'                                               |   VIEW CART   | LOGOUT |" << endl
-					<< "----------------------------------------------------------------------------------------" << endl;
-				
+			{	
 				if (LoggedIn == true)
 				{
+					cout << endl << "'The Book Store'                                               |   VIEW CART   | LOGOUT |" << endl
+						<< "----------------------------------------------------------------------------------------" << endl;
+
 					cout << showpoint << setprecision(4);
 					cout << "CATALOG:" << endl << endl
-						<< "Title: '" << book1.getTitle() << "'" << " Author: " << book1.getAuthor() << "   Price:$" << book1.getPrice() << endl << endl
-						<< "Title: '" << book2.getTitle() << "'" << " Author: " << book2.getAuthor() << "   Price:$" << book2.getPrice() << endl << endl
-						<< "Title: '" << book3.getTitle() << "'" << " Author: " << book3.getAuthor() << "   Price:$" << book3.getPrice() << endl << endl
-						<< "Title: '" << book4.getTitle() << "'" << " Author: " << book4.getAuthor() << "   Price:$" << book4.getPrice() << endl;
+						<< "Title: '" << book1.getTitle() << "'" << " Author: " << book1.getAuthor() << "   Price:$" << book1.getPrice() << "Quantity in Stock: " << book1.getQuantity() << endl << endl
+						<< "Title: '" << book2.getTitle() << "'" << " Author: " << book2.getAuthor() << "   Price:$" << book2.getPrice() << "Quantity in Stock: " << book2.getQuantity() << endl << endl
+						<< "Title: '" << book3.getTitle() << "'" << " Author: " << book3.getAuthor() << "   Price:$" << book3.getPrice() << "Quantity in Stock: " << book3.getQuantity() << endl << endl
+						<< "Title: '" << book4.getTitle() << "'" << " Author: " << book4.getAuthor() << "   Price:$" << book4.getPrice() << "Quantity in Stock: " << book4.getQuantity() << endl;
 				}
 
 				else
@@ -352,16 +375,25 @@ int main()
 			//User requests to view cart
 			else if (command2 == "cart")
 			{
-				cout << endl << "'The Book Store'                                           |   VIEW CATALOG  | LOGOUT |" << endl
-					<< "----------------------------------------------------------------------------------------" << endl;
-
 				if (LoggedIn == true)
 				{	
+					cout << endl << "'The Book Store'                                           |   VIEW CATALOG  | LOGOUT |" << endl
+						<< "----------------------------------------------------------------------------------------" << endl;
+
+					float cartTotal;
 					cout << fixed << showpoint << setprecision(2);
-					userCart.outputCartContents();
+					
+					for (int i = 0; i < CartVector.size(); i++)
+					{
+						if (userLoggedInId == CartVector[i].getUserId())
+						{
+							CartVector[i].outputCartContents();
+							cartTotal = CartVector[i].getCartTotal();
+						}
+					}
 
 					cout << "-------------------------" << endl;
-					cout << "         Total: $" << userCart.getCartTotal() << endl;
+					cout << "         Total: $" << cartTotal << endl;
 				}
 
 				else
@@ -477,7 +509,13 @@ int main()
 					{
 						if (UserList[i].getFilledOutInfo() == true)
 						{
-							userCart.checkoutCart();
+							for (int i = 0; i < CartVector.size(); i++)
+							{
+								if (userLoggedInId == CartVector[i].getUserId())
+								{
+									CartVector[i].checkoutCart();
+								}
+							}
 						}
 
 						else
@@ -503,8 +541,8 @@ int main()
 				<< "edit shipping - allows user to add/edit their shipping information" << endl
 				<< "edit payment - allows user to add/edit their payment information" << endl
 				<< "logout - logs user out of account" << endl
-				<< "add <bookName> <quantity> - adds specified book and quantity to cart" << endl
-				<< "remove <bookName> - removes specified book from cart" << endl
+				<< "add <bookISBN> <quantity> - adds specified book and quantity to cart" << endl
+				<< "remove <bookISBN> - removes specified book from cart" << endl
 				<< "view catalog - displays a catalog of all books" << endl
 				<< "view cart - display cart contents" << endl
 				<< "view history - displays user history" << endl
