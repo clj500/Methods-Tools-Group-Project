@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <vector>
 #include "Book.h"
+#
 
 using namespace std;
 
@@ -11,9 +12,10 @@ private:
     int userId;
     int cartId; 
     int cartTotal;
-    vector<Book> cartContents;
     
 public:
+    vector<Book> cartContents;
+    
     void addToCart(Book novel, int quantity);
     void removeBook(string bookName, int quantity);
     void outputCartContents();
