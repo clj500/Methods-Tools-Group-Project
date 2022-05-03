@@ -5,18 +5,18 @@ class Book
 {
 private:
     int isbn;
-    int amountInStock;
+    int amountOfBook;
     float price;
     string title;
     string author;
     string genre;
 
 public:
-    Book(int isbn, int amountInStock, float price, string title, string author, string genre) : isbn(isbn), amountInStock(amountInStock) price(price), title(title), author(author), genre(genre) {}
+    Book(int isbn, int amountOfBook, float price, string title, string author, string genre) : isbn(isbn), amountOfBook(amountOfBook) price(price), title(title), author(author), genre(genre) {}
 
-    void setAmountInStock(int amountInStock);
+    void setAmountOfBook(int amountOfBook);
     int getIsbn();
-    int getAmountInStock();
+    int getAmountOfBook();
     float getPrice();
     string getTitle();
     string getAuthor();
