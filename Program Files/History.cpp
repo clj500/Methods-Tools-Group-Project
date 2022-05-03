@@ -3,10 +3,10 @@
 void History::displayOrderContent() {
 
     for (int i = 0; i < orderContent.size(); i++) {
-            cout << "   Title - " << orderContent[i].getTitle() << endl;
-            cout << "    ISBN - " << orderContent[i].getIsbn() << endl;
-            cout << "   Price - " << orderContent[i].getPrice() << endl;
-            cout << "Quantity - " << orderContent[i].getQuantity() << endl << endl;
+            cout << "  Title - " << orderContent[i].getTitle() << endl;
+            cout << "  ISBN - " << orderContent[i].getIsbn() << endl;
+            cout << "  Price - " << orderContent[i].getPrice() << endl;
+            cout << "  Quantity - " << orderContent[i].getQuantity() << endl << endl;
         }
 }
 void History::setOrderId(int orderId) {
