@@ -21,6 +21,7 @@ public:
 	bool readDouble(double& val);
 	bool readChar(char& val);
 
-	void rewind(); 
+	void rewind();
 	void clear();
 };
+

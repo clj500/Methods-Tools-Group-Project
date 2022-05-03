@@ -13,13 +13,12 @@ private:
     vector<Book> cartContents;
 
 public:
+    Cart() : userId(0), cartTotal(0) {}
     Cart(int userId) : userId(userId), cartTotal(0) {}
     void addToCart(Book novel, int quantity);
-    void removeBook(string bookName, int quantity);
+    void removeBook(string bookName);
     void outputCartContents();
     void checkoutCart();
     int getUserId();
-    int getCartTotal();
-
-
+    float getCartTotal();
 };

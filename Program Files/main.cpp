@@ -297,7 +297,7 @@ int main()
 
 				if (LoggedIn == true)
 				{	
-					cout << showpoint << setprecision(4);
+					cout << fixed << showpoint << setprecision(2);
 					userCart.outputCartContents();
 
 					cout << "Total: $" << userCart.getCartTotal() << endl;
@@ -379,7 +379,7 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				cout << endl << endl << "LOGOUT" << endl;
+				userCart.checkoutCart();
 			}
 
 			else

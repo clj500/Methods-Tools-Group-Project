@@ -5,12 +5,12 @@ void Book::setQuantity(int quantity)
     this->quantity = quantity;
 }
 
-int Book::getIsbn(): 
+int Book::getIsbn()
 {
     return isbn;
 }
 
-int Book::quantity()
+int Book::getQuantity()
 {
     return quantity;
 }
