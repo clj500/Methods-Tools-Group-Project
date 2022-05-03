@@ -25,6 +25,7 @@ int main()
 	vector<User> UserList;
 	vector<Book> BookVector;
 	vector<Cart> CartVector;
+	vector<History> HistoryVector;
 
 	Book book1(1, 10, 20.00, "Pet Sematary", "Stephen King", "Horror");
 	Book book2(2, 10, 10.00, "Skippyjon Jones", "Judith Byron Schachner", "Kids");
@@ -513,6 +514,20 @@ int main()
 							{
 								if (userLoggedInId == CartVector[i].getUserId())
 								{
+									History newOrder(userLoggedInId, 0, CartVector[i].getCartTotal())
+									
+									for(int j = 0; j < CartVector[i].cartContents.size(); j++)
+									{
+										newOrder.orderContent.push_back(cartContents[j]);
+									}
+									
+									HistoryVector.push_back(newOrder);
+									
+									for(int j = 0; j < HistoryVector.size(); j++)
+									{
+										HistoryVector[j].setOrderId(j);
+									}
+									
 									CartVector[i].checkoutCart();
 								}
 							}
