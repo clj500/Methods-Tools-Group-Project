@@ -9,6 +9,7 @@ using namespace::std;
 
 #include "Tokenizer.h"
 #include "User.h"
+#include "Shart.h"
 
 int main()
 {
@@ -16,8 +17,20 @@ int main()
 	bool LoggedIn = false;
 	string user_input, command1, userLoggedIn;
 	vector<User> UserList;
+	vector<Book> BookVector;
+
+	Book book1(420, 10, 15.00, "book1", "cam", "horror");
+	Book book2(420, 10, 10.00, "book2", "cam", "horror");
+	Book book3(420, 10, 30.00, "book3", "cam", "horror");
+	Book book4(420, 10, 200.00, "book4", "cam", "horror");
+
+	BookVector.push_back(book1);
+	BookVector.push_back(book2);
+	BookVector.push_back(book3);
+	BookVector.push_back(book4);
 
 	Tokenizer tkn;
+	Cart userCart(420);
 
 	cout << "Welcome to 'The Book Store'" << endl << "Type help to pull up a list of commands" << endl;
 	cout << "-> LOGIN" << endl;
@@ -189,7 +202,33 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				cout << endl << endl << "LOGOUT" << endl;
+				string bookName;
+
+				if (tkn.readWord(bookName))
+				{
+					int quantity;
+
+					if (tkn.readInteger(quantity))
+					{
+						for (int i = 0; i < BookVector.size(); i++)
+						{
+							if (bookName == BookVector[i].getTitle())
+							{
+								userCart.addToCart(BookVector[i], quantity);
+							}
+						}
+					}
+
+					else
+					{
+						cout << "ERROR: Invalid command" << endl;
+					}
+				}
+
+				else
+				{
+					cout << "ERROR: Invalid command" << endl;
+				}
 			}
 
 			else
@@ -203,7 +242,17 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				cout << endl << endl << "LOGOUT" << endl;
+				string bookName;
+
+				if (tkn.readWord(bookName))
+				{
+					userCart.removeBook(bookName);
+				}
+
+				else
+				{
+					cout << "ERROR: Invalid command" << endl;
+				}
 			}
 
 			else
@@ -225,17 +274,12 @@ int main()
 				
 				if (LoggedIn == true)
 				{
+					cout << showpoint << setprecision(4);
 					cout << "CATALOG:" << endl
-						<< "Book1 Price:$" << endl
-						<< "Book2 Price:$" << endl
-						<< "Book3 Price:$" << endl
-						<< "Book4 Price:$" << endl
-						<< "Book5 Price:$" << endl
-						<< "Book6 Price:$" << endl
-						<< "Book7 Price:$" << endl
-						<< "Book8 Price:$" << endl
-						<< "Book9 Price:$" << endl
-						<< "Book10 Price:$" << endl;
+						<< book1.getTitle() << " " << "Price:$" << book1.getPrice() << endl
+						<< book2.getTitle() << " " << "Price:$" << book2.getPrice() << endl
+						<< book3.getTitle() << " " << "Price:$" << book3.getPrice() << endl
+						<< book4.getTitle() << " " << "Price:$" << book4.getPrice() << endl;
 
 					cout << endl << endl << "LOGOUT" << endl;
 				}
@@ -252,8 +296,11 @@ int main()
 				cout << "Viewing cart..." << endl;
 
 				if (LoggedIn == true)
-				{
-					cout << endl << endl << "LOGOUT" << endl;
+				{	
+					cout << showpoint << setprecision(4);
+					userCart.outputCartContents();
+
+					cout << "Total: $" << userCart.getCartTotal() << endl;
 				}
 
 				else
@@ -275,6 +322,48 @@ int main()
 				else
 				{
 					cout << "ERROR: Must be logged in to view history" << endl;
+				}
+			}
+
+			else if (command2 == "shipping")
+			{
+				cout << "Viewing shipping info..." << endl;
+
+				if (LoggedIn == true)
+				{
+					for (int i = 0; i < UserList.size(); i++)
+					{
+						if (userLoggedIn == UserList[i].getUsername())
+						{
+							UserList[i].getShippingInfo();
+						}
+					}
+				}
+
+				else
+				{
+					cout << "ERROR: Must be logged in to view shipping info" << endl;
+				}
+			}
+
+			else if (command2 == "payment")
+			{
+				cout << "Viewing payment info..." << endl;
+
+				if (LoggedIn == true)
+				{
+					for (int i = 0; i < UserList.size(); i++)
+					{
+						if (userLoggedIn == UserList[i].getUsername())
+						{
+							UserList[i].getPaymentInfo();
+						}
+					}
+				}
+
+				else
+				{
+					cout << "ERROR: Must be logged in to view shipping info" << endl;
 				}
 			}
 
@@ -308,6 +397,11 @@ int main()
 				<< "logout - logs user out of account" << endl
 				<< "add <bookName> <quantity> - adds specified book and quantity to cart" << endl
 				<< "remove <bookName> - removes specified book from cart" << endl
+				<< "view books - displays a catalog of all books" << endl
+				<< "view cart - display cart contents" << endl
+				<< "view history - displays user history" << endl
+				<< "view shipping - display shipping info" << endl
+				<< "view payment - display payment info" << endl
 				<< "checkout - checks out all items in user's cart" << endl
 				<< "help - displays a list of valid commands" << endl
 				<< "exit - exits program" << endl;
