@@ -15,12 +15,6 @@ int History::getUserId() {
 int History::getOrderId() {
     return orderId;
 }
-string History::getDate() {
-    return date;
-}
 float History::getOrderTotal() {
     return orderTotal;
-}
-string History::getTime() {
-    return time;
 }
