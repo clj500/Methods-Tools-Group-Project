@@ -16,7 +16,7 @@ class History {
 		History() : userId(0), orderId(1), orderTotal(0.00) {}
 		History(int userId, int orderId, float orderTotal) : userId(userId), orderId(orderId), orderTotal(orderTotal) {}
 		void displayOrderContent();
-		void setOrderId();
+		void setOrderId(int orderId);
 		int getUserId();
 		int getOrderId();
 		float getOrderTotal();
