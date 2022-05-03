@@ -79,7 +79,7 @@ int main()
 
 					cout << "Enter a username: ";
 
-					cin >> username;
+					getLine(cin, username);
 
 					for (int i = 0; i < UserList.size(); i++)
 					{
@@ -111,7 +111,7 @@ int main()
 
 				string password;
 
-				cin >> password;
+				getLine(cin, password);
 
 				for (int i = 0; i < UserList.size(); i++)
 				{
@@ -465,7 +465,7 @@ int main()
 
 					//Re-enter password for security
 					cout << "Re-enter your password: ";
-					cin >> passwordCheck;
+					getLine(cin, passwordCheck);
 
 					for (int i = 0; i < UserList.size(); i++)
 					{
