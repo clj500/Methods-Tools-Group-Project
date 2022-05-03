@@ -9,11 +9,6 @@ using namespace::std;
 
 #include "Tokenizer.h"
 #include "User.h"
-#include "Book.h"
-
-//vector<Book> books;
-//Book book = Book(123, 1, 1.01, "A Title", "An Author", "A Genre");
-//books.push_back(book);
 
 int main()
 {
@@ -21,8 +16,6 @@ int main()
 	bool LoggedIn = false;
 	string user_input, command1, userLoggedIn;
 	vector<User> UserList;
-
-	//This is a test
 
 	Tokenizer tkn;
 
@@ -33,6 +26,23 @@ int main()
 
 	while (runProg == true)
 	{
+		if (LoggedIn == true)
+		{
+			cout << "CATALOG:" << endl
+				<< "Book1 Price:$" << endl
+				<< "Book2 Price:$" << endl
+				<< "Book3 Price:$" << endl
+				<< "Book4 Price:$" << endl
+				<< "Book5 Price:$" << endl
+				<< "Book6 Price:$" << endl
+				<< "Book7 Price:$" << endl
+				<< "Book8 Price:$" << endl
+				<< "Book9 Price:$" << endl
+				<< "Book10 Price:$" << endl;
+
+			cout << endl << endl << "LOGOUT" << endl;
+		}
+
 		cout << ">> ";
 
 		//Get user input
@@ -189,6 +199,32 @@ int main()
 			}
 		}
 
+		else if (command1 == "add")
+		{
+		}
+
+		else if (command1 == "remove")
+		{
+		}
+
+		else if (command1 == "view")
+		{
+			string command2;
+			tkn.readWord(command2);
+
+			if (command2 == "cart")
+			{
+
+			}
+
+			else
+			{
+				cout << "ERROR: Invalid command" << endl;
+			}
+		}
+
+
+
 		//Displays a list of commands
 		else if (command1 == "help")
 		{
@@ -196,6 +232,7 @@ int main()
 				<< "create account - initiates account creation" << endl
 				<< "login <username> <password> - login to an existing account" << endl
 				<< "logout - logs user out of account" << endl
+				<< "add <bookName> <quantity> - adds specified book and quantity to cart"
 				<< "help - displays a list of valid commands" << endl
 				<< "exit - exits program" << endl;
 		}
