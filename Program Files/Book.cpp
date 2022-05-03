@@ -1,8 +1,8 @@
 #include "Book.h"
 
-void Book::setAmountInStock(int amountInStock)
+void Book::setAmountOfBook(int amountOfBook)
 {
-    this->amountInStock = amountInStock;
+    this->amountOfBook = amountOfBook;
 }
 
 int Book::getIsbn(): 
@@ -10,9 +10,9 @@ int Book::getIsbn():
     return isbn;
 }
 
-int Book::getAmountInStock()
+int Book::getAmountOfBook()
 {
-    return amountInStock;
+    return amountOfBook;
 }
 
 float Book::getPrice()
