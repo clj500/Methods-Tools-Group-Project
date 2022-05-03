@@ -26,23 +26,6 @@ int main()
 
 	while (runProg == true)
 	{
-		if (LoggedIn == true)
-		{
-			cout << "CATALOG:" << endl
-				<< "Book1 Price:$" << endl
-				<< "Book2 Price:$" << endl
-				<< "Book3 Price:$" << endl
-				<< "Book4 Price:$" << endl
-				<< "Book5 Price:$" << endl
-				<< "Book6 Price:$" << endl
-				<< "Book7 Price:$" << endl
-				<< "Book8 Price:$" << endl
-				<< "Book9 Price:$" << endl
-				<< "Book10 Price:$" << endl;
-
-			cout << endl << endl << "LOGOUT" << endl;
-		}
-
 		cout << ">> ";
 
 		//Get user input
@@ -112,6 +95,7 @@ int main()
 					if (username == UserList[i].getUsername())
 					{
 						UserList[i].setPassword(password);
+						UserList[i].setShippingInfo();
 					}
 				}
 			}
@@ -186,6 +170,7 @@ int main()
 			}
 		}
 
+		//User requests to logout
 		else if (command1 == "logout")
 		{
 			if (LoggedIn == true)
@@ -199,31 +184,120 @@ int main()
 			}
 		}
 
+		//User requests to add item in cart
 		else if (command1 == "add")
 		{
+			if (LoggedIn == true)
+			{
+				cout << endl << endl << "LOGOUT" << endl;
+			}
+
+			else
+			{
+				cout << "ERROR: Must be logged in to add an item" << endl;
+			}
 		}
 
+		//User requests to remove item from cart
 		else if (command1 == "remove")
 		{
+			if (LoggedIn == true)
+			{
+				cout << endl << endl << "LOGOUT" << endl;
+			}
+
+			else
+			{
+				cout << "ERROR: Must be logged in to remove an item" << endl;
+			}
 		}
 
+		//User requests to view
 		else if (command1 == "view")
 		{
 			string command2;
 			tkn.readWord(command2);
 
-			if (command2 == "cart")
+			//User requests to view books
+			if (command2 == "books")
 			{
+				cout << "Viewing books..." << endl;
+				
+				if (LoggedIn == true)
+				{
+					cout << "CATALOG:" << endl
+						<< "Book1 Price:$" << endl
+						<< "Book2 Price:$" << endl
+						<< "Book3 Price:$" << endl
+						<< "Book4 Price:$" << endl
+						<< "Book5 Price:$" << endl
+						<< "Book6 Price:$" << endl
+						<< "Book7 Price:$" << endl
+						<< "Book8 Price:$" << endl
+						<< "Book9 Price:$" << endl
+						<< "Book10 Price:$" << endl;
 
+					cout << endl << endl << "LOGOUT" << endl;
+				}
+
+				else
+				{
+					cout << "ERROR: Must be logged in to view books" << endl;
+				}
 			}
 
+			//User requests to view cart
+			else if (command2 == "cart")
+			{
+				cout << "Viewing cart..." << endl;
+
+				if (LoggedIn == true)
+				{
+					cout << endl << endl << "LOGOUT" << endl;
+				}
+
+				else
+				{
+					cout << "ERROR: Must be logged in to view cart" << endl;
+				}
+			}
+
+			//User requests to view history
+			else if (command2 == "history")
+			{
+				cout << "Viewing history..." << endl;
+
+				if (LoggedIn == true)
+				{
+					cout << endl << endl << "LOGOUT" << endl;
+				}
+
+				else
+				{
+					cout << "ERROR: Must be logged in to view history" << endl;
+				}
+			}
+
+			//Output error
 			else
 			{
 				cout << "ERROR: Invalid command" << endl;
 			}
 		}
 
+		//User requests to checkout their cart
+		else if (command1 == "checkout")
+		{
+			if (LoggedIn == true)
+			{
+				cout << endl << endl << "LOGOUT" << endl;
+			}
 
+			else
+			{
+				cout << "ERROR: Must be logged in to checkout" << endl;
+			}
+		}
 
 		//Displays a list of commands
 		else if (command1 == "help")
@@ -232,7 +306,9 @@ int main()
 				<< "create account - initiates account creation" << endl
 				<< "login <username> <password> - login to an existing account" << endl
 				<< "logout - logs user out of account" << endl
-				<< "add <bookName> <quantity> - adds specified book and quantity to cart"
+				<< "add <bookName> <quantity> - adds specified book and quantity to cart" << endl
+				<< "remove <bookName> - removes specified book from cart" << endl
+				<< "checkout - checks out all items in user's cart" << endl
 				<< "help - displays a list of valid commands" << endl
 				<< "exit - exits program" << endl;
 		}
