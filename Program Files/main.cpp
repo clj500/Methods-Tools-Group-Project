@@ -522,7 +522,7 @@ int main()
 							{
 								if (userLoggedInId == CartVector[i].getUserId())
 								{
-									History newOrder(userLoggedInId, 0, CartVector[i].getCartTotal())
+									History newOrder(userLoggedInId, CartVector[i].getCartTotal())
 									
 									for(int j = 0; j < CartVector[i].cartContents.size(); j++)
 									{
@@ -530,14 +530,6 @@ int main()
 									}
 									
 									HistoryVector.push_back(newOrder);
-									
-									for(int j = 0; j < HistoryVector.size(); j++)
-									{
-										if(HistoryVector[j].getOrderId() == 0)
-										{
-											HistoryVector[j].setOrderId(j+1);
-										}
-									}
 								}
 								CartVector[i].checkoutCart();
 							}
