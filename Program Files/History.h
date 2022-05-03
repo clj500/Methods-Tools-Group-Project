@@ -11,9 +11,10 @@ class History {
 		int userId, orderId;
 		string date;
 		string time;
-		vector<Book> orderContent;
 		float orderTotal;
 	public:
+		vector<Book> orderContent;
+	
 		History() : userId(0), orderId(1), date(""), time(""), orderTotal(0.00) {}
 		History(int userId, int orderId, string date, string time, float orderTotal) : userId(userId), orderId(orderId), date(date), time(time), orderTotal(orderTotal) {}
 		void displayOrderContent();
