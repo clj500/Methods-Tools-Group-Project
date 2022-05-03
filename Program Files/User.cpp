@@ -23,10 +23,10 @@ void User::setShippingInfo()
 	string first, last, address, city, state, zip;
 
 	cout << "First name: ";
-	cin >> first;
+	getLine(cin, first);
 
 	cout << "Last name: ";
-	cin >> last;
+	getLine(cin, last);
 
 	cout << "Street address: ";
 	
@@ -38,13 +38,13 @@ void User::setShippingInfo()
 	tkn1.readWord(address);
 
 	cout << "City: ";
-	cin >> city;
+	getLine(cin, city);
 
 	cout << "State: ";
-	cin >> state;
+	getLine(cin, state);
 
 	cout << "Zip Code: ";
-	cin >> zip;
+	getLine(cin, zip);
 
 	//Push data into vector
 	shippingInfo.push_back(first);
@@ -64,10 +64,10 @@ void User::setPaymentInfo()
 	string first, last, cardNumber, cvc, expiration;
 
 	cout << "First name: ";
-	cin >> first;
+	getLine(cin, first);
 
 	cout << "Last name: ";
-	cin >> last;
+	getLine(cin, last);
 
 	cout << "Card number: ";
 
@@ -79,10 +79,10 @@ void User::setPaymentInfo()
 	tkn1.readWord(cardNumber);
 
 	cout << "CVC: ";
-	cin >> cvc;
+	getLine(cin, cvc);
 
 	cout << "Expiration Date (month/day/year): ";
-	cin >> expiration;
+	getLine(cin, expiration);
 
 	paymentInfo.push_back(first);
 	paymentInfo.push_back(last);
