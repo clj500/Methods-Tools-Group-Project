@@ -9,12 +9,12 @@ Once logged in, your user needs to be able to interact with all the items, shop,
 
 Here are the specific requirements once logged in:
 
-[] View all items in a category
-[] View all items in the user's shopping cart
-[] Add item from a category to their shopping cart
-[] Remove an item from their shopping cart
-[] Checkout the items currently in their cart
-[] Removes items from the user's shopping cart
+[x] View all items in a category
+[x] View all items in the user's shopping cart
+[x] Add item from a category to their shopping cart
+[x] Remove an item from their shopping cart
+[x] Checkout the items currently in their cart
+[x] Removes items from the user's shopping cart
 [] Edits stock information to lower the stock accordingly
 [] Add an order to the user's order history
 [] View the logged in user's order history
@@ -22,7 +22,7 @@ Here are the specific requirements once logged in:
 [] Edit the shipping information
 [] Edit the payment information
 [] Delete their account (and all the order history/shopping cart data associated with it)
-[] Logout
+[x] Logout
  
 
 Each 4-person group will have one category of inventory item (or their choice), while each 5-person group will have two categories of inventory items (of their choice). Make sure the inventory item(s) is well-rounded and has information relevant to being an inventory item (such as price and stock number, etc) and relevant to the item itself.
