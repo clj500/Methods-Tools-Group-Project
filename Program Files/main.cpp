@@ -223,7 +223,7 @@ int main()
 					{
 						if (userLoggedIn == UserList[i].getUsername())
 						{
-							UserList[i].getShippingInfo();
+							UserList[i].setShippingInfo();
 						}
 					}
 				}
@@ -234,7 +234,7 @@ int main()
 					{
 						if (userLoggedIn == UserList[i].getUsername())
 						{
-							UserList[i].getPaymentInfo();
+							UserList[i].setPaymentInfo();
 						}
 					}
 				}
