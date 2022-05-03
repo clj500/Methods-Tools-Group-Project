@@ -8,16 +8,14 @@ using namespace::std;
 
 class History {
 	private:
-		int userId, orderId;
+		int userId;
 		float orderTotal;
 	public:
 		vector<Book> orderContent;
 	
-		History() : userId(0), orderId(1), orderTotal(0.00) {}
-		History(int userId, int orderId, float orderTotal) : userId(userId), orderId(orderId), orderTotal(orderTotal) {}
+		History() : userId(0), orderTotal(0.00) {}
+		History(int userId, float orderTotal) : userId(userId), orderTotal(orderTotal) {}
 		void displayOrderContent();
-		void setOrderId(int orderId);
 		int getUserId();
-		int getOrderId();
 		float getOrderTotal();
 };
