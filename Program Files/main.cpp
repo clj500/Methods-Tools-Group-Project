@@ -538,9 +538,8 @@ int main()
 											HistoryVector[j].setOrderId(j+1);
 										}
 									}
-									
-									CartVector[i].checkoutCart();
 								}
+								CartVector[i].checkoutCart();
 							}
 						}
 
