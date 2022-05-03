@@ -1,5 +1,10 @@
-// MethodsProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/*
+Class: Methods & Tools in SW Dev.
+Section: 01
+Contributors: Devin Shead, Cassie Javorsky, David Heaton, Cameron Verser
+Program Description:
+
+*/
 
 #include <iostream>
 #include <string>
@@ -19,10 +24,10 @@ int main()
 	vector<User> UserList;
 	vector<Book> BookVector;
 
-	Book book1(420, 10, 15.00, "book1", "cam", "horror");
-	Book book2(420, 10, 10.00, "book2", "cam", "horror");
-	Book book3(420, 10, 30.00, "book3", "cam", "horror");
-	Book book4(420, 10, 200.00, "book4", "cam", "horror");
+	Book book1(1, 10, 15.00, "Pet Sematary", "Stephen King", "Horror");
+	Book book2(2, 10, 10.00, "Skippyjon Jones", "Judith Byron Schachner", "Kids");
+	Book book3(3, 10, 30.00, "book3", "cam", "horror");
+	Book book4(4, 10, 200.00, "book4", "cam", "horror");
 
 	BookVector.push_back(book1);
 	BookVector.push_back(book2);
@@ -32,14 +37,15 @@ int main()
 	Tokenizer tkn;
 	Cart userCart(420);
 
-	cout << "Welcome to 'The Book Store'" << endl << "Type help to pull up a list of commands" << endl;
-	cout << "-> LOGIN" << endl;
-	cout << "-> CREATE ACCOUNT" << endl;
-	cout << "-> EXIT PROGRAM" << endl;
+	//Output welcome screen
+	cout << "Welcome to 'The Book Store'                           |  CREATE ACCOUNT  | LOGIN | EXIT |" << endl
+		<< "----------------------------------------------------------------------------------------" << endl
+		<< "Type help to pull up a list of commands" << endl;
 
+	//Start program to allow for user command-line use
 	while (runProg == true)
 	{
-		cout << ">> ";
+		cout << endl << ">> ";
 
 		//Get user input
 		getline(cin, user_input);
@@ -67,7 +73,7 @@ int main()
 				{
 					checkUserExists = false;
 
-					cout << "Enter your username: ";
+					cout << "Enter a username: ";
 
 					cin >> username;
 
@@ -97,7 +103,7 @@ int main()
 				}
 
 				//Prompt user to set up their password
-				cout << "Enter your password: ";
+				cout << "Enter a password: ";
 
 				string password;
 
@@ -108,7 +114,7 @@ int main()
 					if (username == UserList[i].getUsername())
 					{
 						UserList[i].setPassword(password);
-						UserList[i].setShippingInfo();
+						tkn.clear();
 					}
 				}
 			}
@@ -147,27 +153,35 @@ int main()
 								}
 							}
 						}
-					}
 
-					//If account does exist, check that password is present and correct
-					if (checkUserExists == true)
-					{
-						if (passwordMatches == true)
+						//If account does exist, check that password is present and correct
+						if (checkUserExists == true)
 						{
-							cout << "Login successful" << endl;
-							LoggedIn = true;
-							userLoggedIn = username;
+							if (passwordMatches == true)
+							{
+								cout << "Login successful" << endl;
+								LoggedIn = true;
+								userLoggedIn = username;
+
+								cout << endl << "'The Book Store'                            |   VIEW CATALOG   |   VIEW CART   | LOGOUT |" << endl
+									<< "----------------------------------------------------------------------------------------" << endl;
+							}
+
+							else
+							{
+								cout << "ERROR: Incorrect password" << endl;
+							}
 						}
 
-						else
+						else if (checkUserExists == false)
 						{
-							cout << "ERROR: Incorrect password" << endl;
+							cout << "ERROR: An account does not exist with this username" << endl;
 						}
 					}
 
-					else
+					else if (!tkn.readWord(password))
 					{
-						cout << "ERROR: An account does not exist with this username" << endl;
+						cout << "ERROR: Invalid command" << endl;
 					}
 				}
 
@@ -183,17 +197,63 @@ int main()
 			}
 		}
 
+		//User requests to enter/edit their info
+		else if (command1 == "edit")
+		{
+			if (LoggedIn == true)
+			{
+				string command2;
+				tkn.readWord(command2);
+
+				if (command2 == "shipping")
+				{
+					for (int i = 0; i < UserList.size(); i++)
+					{
+						if (userLoggedIn == UserList[i].getUsername())
+						{
+							UserList[i].getShippingInfo();
+						}
+					}
+				}
+
+				else if (command2 == "payment")
+				{
+					for (int i = 0; i < UserList.size(); i++)
+					{
+						if (userLoggedIn == UserList[i].getUsername())
+						{
+							UserList[i].getPaymentInfo();
+						}
+					}
+				}
+
+				else
+				{
+					cout << "ERROR: Invalid command" << endl;
+				}
+			}
+
+			else
+			{
+				cout << "ERROR: Must be logged in to edit information" << endl;
+			}
+		}
+
 		//User requests to logout
 		else if (command1 == "logout")
 		{
 			if (LoggedIn == true)
 			{
-				cout << "Logging out " << userLoggedIn << endl;
 				LoggedIn = false;
+
+				cout << endl << "Welcome to 'The Book Store'                           |  CREATE ACCOUNT  | LOGIN | EXIT |" << endl
+					<< "----------------------------------------------------------------------------------------" << endl
+					<< "Type help to pull up a list of commands" << endl;
 			}
+
 			else
 			{
-				cout << "ERROR: No account signed in" << endl;
+				cout << "ERROR: Must be logged in to log out" << endl;
 			}
 		}
 
@@ -268,63 +328,64 @@ int main()
 			tkn.readWord(command2);
 
 			//User requests to view books
-			if (command2 == "books")
+			if (command2 == "catalog")
 			{
-				cout << "Viewing books..." << endl;
+				cout << endl << "'The Book Store'                                               |   VIEW CART   | LOGOUT |" << endl
+					<< "----------------------------------------------------------------------------------------" << endl;
 				
 				if (LoggedIn == true)
 				{
 					cout << showpoint << setprecision(4);
-					cout << "CATALOG:" << endl
-						<< book1.getTitle() << " " << "Price:$" << book1.getPrice() << endl
-						<< book2.getTitle() << " " << "Price:$" << book2.getPrice() << endl
-						<< book3.getTitle() << " " << "Price:$" << book3.getPrice() << endl
-						<< book4.getTitle() << " " << "Price:$" << book4.getPrice() << endl;
-
-					cout << endl << endl << "LOGOUT" << endl;
+					cout << "CATALOG:" << endl << endl
+						<< "Title: '" << book1.getTitle() << "'" << " Author: " << book1.getAuthor() << "   Price:$" << book1.getPrice() << endl << endl
+						<< "Title: '" << book2.getTitle() << "'" << " Author: " << book2.getAuthor() << "   Price:$" << book2.getPrice() << endl << endl
+						<< "Title: '" << book3.getTitle() << "'" << " Author: " << book3.getAuthor() << "   Price:$" << book3.getPrice() << endl << endl
+						<< "Title: '" << book4.getTitle() << "'" << " Author: " << book4.getAuthor() << "   Price:$" << book4.getPrice() << endl;
 				}
 
 				else
 				{
-					cout << "ERROR: Must be logged in to view books" << endl;
+					cout << "ERROR: Must be logged in to view books" << endl << endl;
 				}
 			}
 
 			//User requests to view cart
 			else if (command2 == "cart")
 			{
-				cout << "Viewing cart..." << endl;
+				cout << endl << "'The Book Store'                                           |   VIEW CATALOG  | LOGOUT |" << endl
+					<< "----------------------------------------------------------------------------------------" << endl;
 
 				if (LoggedIn == true)
 				{	
 					cout << fixed << showpoint << setprecision(2);
 					userCart.outputCartContents();
 
-					cout << "Total: $" << userCart.getCartTotal() << endl;
+					cout << "-------------------------" << endl;
+					cout << "         Total: $" << userCart.getCartTotal() << endl;
 				}
 
 				else
 				{
-					cout << "ERROR: Must be logged in to view cart" << endl;
+					cout << "ERROR: Must be logged in to view cart" << endl << endl;
 				}
 			}
 
 			//User requests to view history
 			else if (command2 == "history")
 			{
-				cout << "Viewing history..." << endl;
-
 				if (LoggedIn == true)
 				{
-					cout << endl << endl << "LOGOUT" << endl;
+					cout << endl << "'The Book Store'                            |   VIEW CATALOG   |   VIEW CART   | LOGOUT |" << endl
+						<< "----------------------------------------------------------------------------------------" << endl;
 				}
 
 				else
 				{
-					cout << "ERROR: Must be logged in to view history" << endl;
+					cout << "ERROR: Must be logged in to view history" << endl << endl;
 				}
 			}
 
+			//User request to view shipping information
 			else if (command2 == "shipping")
 			{
 				cout << "Viewing shipping info..." << endl;
@@ -335,42 +396,73 @@ int main()
 					{
 						if (userLoggedIn == UserList[i].getUsername())
 						{
-							UserList[i].getShippingInfo();
+							if (UserList[i].getFilledOutInfo() == true)
+							{
+								UserList[i].getShippingInfo();
+							}
+
+							else
+							{
+								cout << "ERROR: No shipping information found" << endl;
+							}
 						}
 					}
 				}
 
 				else
 				{
-					cout << "ERROR: Must be logged in to view shipping info" << endl;
+					cout << "ERROR: Must be logged in to view shipping info" << endl << endl;
 				}
 			}
 
+			//User requests to view payment information
 			else if (command2 == "payment")
 			{
-				cout << "Viewing payment info..." << endl;
-
 				if (LoggedIn == true)
 				{
+					string passwordCheck;
+
+					//Re-enter password for security
+					cout << "Re-enter your password: ";
+					cin >> passwordCheck;
+
 					for (int i = 0; i < UserList.size(); i++)
 					{
 						if (userLoggedIn == UserList[i].getUsername())
 						{
-							UserList[i].getPaymentInfo();
+							if (passwordCheck == UserList[i].getPassword())
+							{
+								if (UserList[i].getFilledOutInfo() == true)
+								{
+									UserList[i].getPaymentInfo();
+								}
+
+								else
+								{
+									cout << "ERROR: No payment information found" << endl;
+								}
+							}
+
+							else
+							{
+								cout << "ERROR: Incorrect password" << endl;
+							}
 						}
 					}
 				}
 
 				else
 				{
-					cout << "ERROR: Must be logged in to view shipping info" << endl;
+					cout << "ERROR: Must be logged in to view payment info" << endl << endl;
 				}
+
+				tkn.clear();
 			}
 
 			//Output error
 			else
 			{
-				cout << "ERROR: Invalid command" << endl;
+				cout << "ERROR: Invalid command" << endl << endl;
 			}
 		}
 
@@ -379,32 +471,48 @@ int main()
 		{
 			if (LoggedIn == true)
 			{
-				userCart.checkoutCart();
+				for (int i = 0; i < UserList.size(); i++)
+				{
+					if (userLoggedIn == UserList[i].getUsername())
+					{
+						if (UserList[i].getFilledOutInfo() == true)
+						{
+							userCart.checkoutCart();
+						}
+
+						else
+						{
+							cout << "ERROR: No shipping information found" << endl;
+						}
+					}
+				}
 			}
 
 			else
 			{
-				cout << "ERROR: Must be logged in to checkout" << endl;
+				cout << "ERROR: Must be logged in to checkout" << endl << endl;
 			}
 		}
 
 		//Displays a list of commands
 		else if (command1 == "help")
 		{
-			cout << "List of available commands: " << endl
+			cout << endl << "List of available commands: " << endl
 				<< "create account - initiates account creation" << endl
 				<< "login <username> <password> - login to an existing account" << endl
+				<< "edit shipping - allows user to add/edit their shipping information" << endl
+				<< "edit payment - allows user to add/edit their payment information" << endl
 				<< "logout - logs user out of account" << endl
 				<< "add <bookName> <quantity> - adds specified book and quantity to cart" << endl
 				<< "remove <bookName> - removes specified book from cart" << endl
-				<< "view books - displays a catalog of all books" << endl
+				<< "view catalog - displays a catalog of all books" << endl
 				<< "view cart - display cart contents" << endl
 				<< "view history - displays user history" << endl
 				<< "view shipping - display shipping info" << endl
 				<< "view payment - display payment info" << endl
 				<< "checkout - checks out all items in user's cart" << endl
 				<< "help - displays a list of valid commands" << endl
-				<< "exit - exits program" << endl;
+				<< "exit - exits program" << endl << endl;
 		}
 
 		//Exits program
@@ -417,7 +525,7 @@ int main()
 		//Error message for invalid command
 		else
 		{
-			cout << "ERROR: Invalid command" << endl;
+			cout << "ERROR: Invalid command" << endl << endl;
 		}
 	}
 }
