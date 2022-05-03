@@ -525,7 +525,10 @@ int main()
 									
 									for(int j = 0; j < HistoryVector.size(); j++)
 									{
-										HistoryVector[j].setOrderId(j);
+										if(HistoryVector[j].getOrderId() == 0)
+										{
+											HistoryVector[j].setOrderId(j+1);
+										}
 									}
 									
 									CartVector[i].checkoutCart();
