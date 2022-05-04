@@ -80,7 +80,7 @@ int main()
 
 					cout << "Enter a username: ";
 
-					getLine(cin, username);
+					getline(cin, username);
 
 					for (int i = 0; i < UserList.size(); i++)
 					{
@@ -112,7 +112,7 @@ int main()
 
 				string password;
 
-				getLine(cin, password);
+				getline(cin, password);
 
 				for (int i = 0; i < UserList.size(); i++)
 				{
@@ -466,7 +466,7 @@ int main()
 
 					//Re-enter password for security
 					cout << "Re-enter your password: ";
-					getLine(cin, passwordCheck);
+					getline(cin, passwordCheck);
 
 					for (int i = 0; i < UserList.size(); i++)
 					{
@@ -523,11 +523,11 @@ int main()
 							{
 								if (userLoggedInId == CartVector[i].getUserId())
 								{
-									History newOrder(userLoggedInId, CartVector[i].getCartTotal())
+									History newOrder(userLoggedInId, CartVector[i].getCartTotal());
 									
-									for(int j = 0; j < CartVector[i].cartContents.size(); j++)
+									for (int j = 0; j < CartVector[i].cartContents.size(); j++)
 									{
-										newOrder.orderContent.push_back(cartContents[j]);
+										newOrder.orderContent.push_back(CartVector[i].cartContents[j]);
 									}
 									
 									HistoryVector.push_back(newOrder);
