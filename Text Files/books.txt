@@ -1,5 +1,5 @@
-1,10,20,Pet Sematary,Stephen King,Horror
-2,10,10,Skippyjon Jones,Judith Byron Schachner,Kids
-3,10,15,The Outsiders,S. E. Hinton,Drama
-4,10,20,Nancy Drew,Carolyn Keene,Mystery
-5,10,15,The Lion, the Witch, and the Wardrobe,C. S. Lewis,Fantasy
+1;10;20.00;Pet Sematary;Stephen King;Horror
+2;10;10.00;Skippyjon Jones;Judith Byron Schachner;Kids
+3;10;15;The Outsiders;S.E. Hinton;Drama
+4;10;20;Nancy Drew;Carolyn Keene;Mystery
+5;10;15;The Lion, the Witch, and the Wardrobe;C.S. Lewis;Fantasy

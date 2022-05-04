@@ -7,6 +7,7 @@ Program Description:
 */
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -28,19 +29,46 @@ int main()
 	vector<Cart> CartVector;
 	vector<History> HistoryVector;
 
-	Book book1(1, 10, 20.00, "Pet Sematary", "Stephen King", "Horror");
-	Book book2(2, 10, 10.00, "Skippyjon Jones", "Judith Byron Schachner", "Kids");
-	Book book3(3, 10, 15.00, "The Outsiders", "S. E. Hinton", "Drama");
-	Book book4(4, 10, 20.00, "Nancy Drew", "Carolyn Keene", "Mystery");
-	Book book5(5, 10, 15.00, "book4", "cam", "horror");
-
-	BookVector.push_back(book1);
-	BookVector.push_back(book2);
-	BookVector.push_back(book3);
-	BookVector.push_back(book4);
-	BookVector.push_back(book5);
-
 	Tokenizer tkn;
+
+	//READ BOOK DATA
+	ifstream myFile("books.txt");
+
+	if (myFile.is_open())
+	{
+		string line;
+
+		while (!myFile.eof())
+		{
+			int count = 0;
+			string load = "";
+			int isbn = 0, quantity = 0;
+			float price = 0;
+			string title, author, genre;
+
+			getline(myFile, line);
+			for (int i = 0; i < line.length(); i++)
+			{
+				if (line[i] != ';')
+				{
+					load += line[i];
+				}
+				else
+				{
+					if (count == 0) { isbn = stoi(load); }
+					if (count == 1) { quantity = stoi(load); }
+					if (count == 2) { price = stof(load); }
+					if (count == 3) { title = load; }
+					if (count == 4) { author = load; }
+					if (count == 5) { genre = load; }
+					count++;
+					load = "";
+				}
+			}
+			Book bookTemp(isbn, quantity, price, title, author, genre);
+			BookVector.push_back(bookTemp);
+		}
+	}
 
 	//Output welcome screen
 	cout << "Welcome to 'The Book Store'                           |  CREATE ACCOUNT  | LOGIN | EXIT |" << endl
@@ -361,11 +389,11 @@ int main()
 						<< "----------------------------------------------------------------------------------------" << endl;
 
 					cout << showpoint << setprecision(4);
-					cout << "CATALOG:" << endl << endl
-						<< "Title: '" << book1.getTitle() << "'" << " Author: " << book1.getAuthor() << "   Price:$" << book1.getPrice() << "Quantity in Stock: " << book1.getQuantity() << endl << endl
-						<< "Title: '" << book2.getTitle() << "'" << " Author: " << book2.getAuthor() << "   Price:$" << book2.getPrice() << "Quantity in Stock: " << book2.getQuantity() << endl << endl
-						<< "Title: '" << book3.getTitle() << "'" << " Author: " << book3.getAuthor() << "   Price:$" << book3.getPrice() << "Quantity in Stock: " << book3.getQuantity() << endl << endl
-						<< "Title: '" << book4.getTitle() << "'" << " Author: " << book4.getAuthor() << "   Price:$" << book4.getPrice() << "Quantity in Stock: " << book4.getQuantity() << endl;
+					cout << "CATALOG:" << endl << endl;
+						for (int i = 0; i < BookVector.size(); i++)
+						{
+							cout << "ISBN #: " << BookVector[i].getIsbn() << " Title: '" << BookVector[i].getTitle() << "'" << " Author: " << BookVector[i].getAuthor() << "   Price:$" << BookVector[i].getPrice() << "Quantity in Stock: " << BookVector[i].getQuantity() << endl << endl;
+						}
 				}
 
 				else
@@ -411,9 +439,9 @@ int main()
 				{
 					cout << endl << "'The Book Store'                            |   VIEW CATALOG   |   VIEW CART   | LOGOUT |" << endl
 						<< "----------------------------------------------------------------------------------------" << endl;
-					for(int i = 0; i < HistoryVector.size(); i++)
+					for (int i = 0; i < HistoryVector.size(); i++)
 					{
-						if(HistoryVector[i].getUserId() == userLoggedInId)
+						if (HistoryVector[i].getUserId() == userLoggedInId)
 						{
 							cout << "Order " << i + 1 << endl;
 							HistoryVector[i].displayOrderContent();
@@ -511,38 +539,38 @@ int main()
 		//User requests to checkout their cart
 		else if (command1 == "checkout")
 		{
-			if (LoggedIn == true)
+		if (LoggedIn == true)
+		{
+			for (int i = 0; i < UserList.size(); i++)
 			{
-				for (int i = 0; i < UserList.size(); i++)
+				if (userLoggedIn == UserList[i].getUsername())
 				{
-					if (userLoggedIn == UserList[i].getUsername())
+					if (UserList[i].getFilledOutInfo() == true)
 					{
-						if (UserList[i].getFilledOutInfo() == true)
+						for (int i = 0; i < CartVector.size(); i++)
 						{
-							for (int i = 0; i < CartVector.size(); i++)
+							if (userLoggedInId == CartVector[i].getUserId())
 							{
-								if (userLoggedInId == CartVector[i].getUserId())
-								{
-									History newOrder(userLoggedInId, CartVector[i].getCartTotal());
-									
+								History newOrder(userLoggedInId, CartVector[i].getCartTotal());
+
 									for (int j = 0; j < CartVector[i].cartContents.size(); j++)
 									{
 										newOrder.orderContent.push_back(CartVector[i].cartContents[j]);
 									}
-									
-									HistoryVector.push_back(newOrder);
-								}
-								CartVector[i].checkoutCart();
-							}
-						}
 
-						else
-						{
-							cout << "ERROR: No shipping information found" << endl;
+								HistoryVector.push_back(newOrder);
+							}
+							CartVector[i].checkoutCart(BookVector);
 						}
+					}
+
+					else
+					{
+						cout << "ERROR: No shipping information found" << endl;
 					}
 				}
 			}
+		}
 
 			else
 			{
@@ -574,6 +602,15 @@ int main()
 		//Exits program
 		else if (command1 == "exit")
 		{
+			//WRITE BOOK
+			ofstream booksOs("books.txt", ios::trunc);
+
+			for (int i = 0; i < BookVector.size(); i++)
+			{
+				booksOs << BookVector[i].getIsbn() << ";" << BookVector[i].getQuantity() << ";" << BookVector[i].getPrice() << ";"
+					<< BookVector[i].getTitle() << ";" << BookVector[i].getAuthor() << ";" << BookVector[i].getGenre() << "\n";
+			}
+
 			cout << "Exiting program..." << endl;
 			runProg = false;
 		}

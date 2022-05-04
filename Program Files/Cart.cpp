@@ -33,7 +33,6 @@ void Cart::addToCart(int bookISBN, int quantity, vector<Book> books)
         {
             if (books[i].getIsbn() == bookISBN)
             {
-                cout << "Adding " << books[i].getTitle() << " to cart" << endl;
                 books[i].setQuantity(quantity);
                 cartContents.push_back(books[i]);
                
@@ -71,10 +70,22 @@ void Cart::outputCartContents()
     }
 }
 
-void Cart::checkoutCart()
+void Cart::checkoutCart(vector<Book> books)
 {
+    int tempQuantity;
+
     for (int i = 0; i < cartContents.size(); i++)
     {
+        tempQuantity = cartContents[i].getQuantity();
+
+        for(int j = 0; j < books.size(); j++)
+        {
+            if (cartContents[i].getTitle() == books[i].getTitle())
+            {
+                books[i].setQuantity(tempQuantity);
+            }
+        }
+
         cartContents.erase(cartContents.begin() + i);
         cout << cartTotal << endl;
         cartTotal=0;

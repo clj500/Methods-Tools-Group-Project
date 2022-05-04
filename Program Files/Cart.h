@@ -19,7 +19,7 @@ public:
     void addToCart(int bookISBN, int quantity, vector<Book> books);
     void removeBook(int bookISBN);
     void outputCartContents();
-    void checkoutCart();
+    void checkoutCart(vector<Book> books);
     int getUserId();
     float getCartTotal();
 };
