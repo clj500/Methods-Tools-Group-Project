@@ -16,11 +16,11 @@ Here are the specific requirements once logged in:
 [x] Checkout the items currently in their cart
 [x] Removes items from the user's shopping cart
 [] Edits stock information to lower the stock accordingly
-[] Add an order to the user's order history
-[] View the logged in user's order history
+[x] Add an order to the user's order history
+[x] View the logged in user's order history
 [] Edit the user's account
-[] Edit the shipping information
-[] Edit the payment information
+[x] Edit the shipping information
+[x] Edit the payment information
 [] Delete their account (and all the order history/shopping cart data associated with it)
 [x] Logout
  
