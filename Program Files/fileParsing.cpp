@@ -9,17 +9,18 @@ if (myFile.is_open())
 
 	while (!myFile.eof())
 	{
+		int count = 0;
 		string load = "";
-		int isbn, quantity;
-		float price;
+		int isbn = 0, quantity = 0;
+		float price = 0;
 		string title, author, genre;
 
 		getline(myFile, line);
 		for (int i = 0; i < line.length(); i++)
 		{
-			if (line[i] != ',')
+			if (line[i] != ';')
 			{
-				load += text[i];
+				load += line[i];
 			}
 			else:
 			{
@@ -40,22 +41,22 @@ if (myFile.is_open())
 
 //WRITE USER (put at the end of exit command)
 
-ofstream os("users.txt", ios::trunc);
+ofstream userOs("users.txt", ios::trunc);
 
 for (int i = 0; i < UserList.size(); i++)
 {
-	os << BookVector[i].getIsbn() << "," << BookVector[i].getQuantity() << "," << BookVector[i].getPrice() << ","
-		<< BookVector[i].getTitle() << "," << BookVector[i].getAuthor() << "," << BookVector[i].getGenre() << "\n";
+	userOs << UserList[i].getUserId() << ";" << BookVector[i].getQuantity() << ";" << BookVector[i].getPrice() << ";"
+		<< BookVector[i].getTitle() << ";" << BookVector[i].getAuthor() << ";" << BookVector[i].getGenre() << "\n";
 }
 
 //WRITE BOOK (put at the end of exit command)
 
-ofstream os("books.txt", ios::trunc);
+ofstream booksOs("books.txt", ios::trunc);
 
 for (int i = 0; i < BookVector.size(); i++)
 {
-	os << BookVector[i].getIsbn() << "," << BookVector[i].getQuantity() << "," << BookVector[i].getPrice() << ","
-		<< BookVector[i].getTitle() << "," << BookVector[i].getAuthor() << "," << BookVector[i].getGenre() << "\n";
+	booksOs << BookVector[i].getIsbn() << ";" << BookVector[i].getQuantity() << ";" << BookVector[i].getPrice() << ";"
+		<< BookVector[i].getTitle() << ";" << BookVector[i].getAuthor() << ";" << BookVector[i].getGenre() << "\n";
 }
 
 //WRITE CART (put at the end of exit command)
@@ -64,11 +65,11 @@ ofstream os("carts.txt", ios::trunc);
 
 for (int i = 0; i < CartVector.size(); i++)
 {
-	os << CartVector[i].getUserId() << "," << CartVector[i].getCartTotal() << "," 
+	os << CartVector[i].getUserId() << ";" << CartVector[i].getCartTotal() << ";";
 	for(int j = 0; j <CartVector[i].cartContents.size(); j++)
 	{
-		os << CartVector[i].cartContents[j].getIsbn() << "," << CartVector[i].cartContents[j].getQuantity() << "," << CartVector[i].cartContents[j].getPrice() << ","
-			<< CartVector[i].cartContents[j].getTitle() << "," << CartVector[i].cartContents[j].getAuthor() << "," << CartVector[i].cartContents.getGenre();
+		os << CartVector[i].cartContents[j].getIsbn() << ";" << CartVector[i].cartContents[j].getQuantity() << ";" << CartVector[i].cartContents[j].getPrice() << ";"
+			<< CartVector[i].cartContents[j].getTitle() << ";" << CartVector[i].cartContents[j].getAuthor() << ";" << CartVector[i].cartContents[j].getGenre();
 	}
 	os << "\n";
 }
@@ -77,12 +78,13 @@ for (int i = 0; i < CartVector.size(); i++)
 
 ofstream os("history.txt", ios::trunc);
 
-for (int i = 0; i < BookVector.size(); i++)
+for (int i = 0; i < HistoryVector.size(); i++)
 {
-	os << HistoryVector[i].getUserId() << "," << HistoryVector[i].getOrderTotal() << "," << BookVector[i].getPrice();
-	for (int j = 0; j < CartVector[i].cartContents.size(); j++)
+	os << HistoryVector[i].getUserId() << ";" << HistoryVector[i].getOrderTotal() << ";";
+	for (int j = 0; j < HistoryVector[i].orderContent.size(); j++)
 	{
-		os << CartVector[i].cartContents[j].getIsbn() << "," << CartVector[i].cartContents[j].getQuantity() << "," << CartVector[i].cartContents[j].getPrice() << ","
-			<< CartVector[i].cartContents[j].getTitle() << "," << CartVector[i].cartContents[j].getAuthor() << "," << CartVector[i].cartContents.getGenre();
+		os << HistoryVector[i].orderContent[j].getIsbn() << ";" << HistoryVector[i].orderContent[j].getQuantity() << ";" << HistoryVector[i].orderContent[j].getPrice() << ";"
+			<< HistoryVector[i].orderContent[j].getTitle() << ";" << HistoryVector[i].orderContent[j].getAuthor() << ";" << HistoryVector[i].orderContent[j].getGenre();
 	}
+	os << "\n";
 }
