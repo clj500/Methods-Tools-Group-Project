@@ -15,6 +15,7 @@ using namespace::std;
 #include "Tokenizer.h"
 #include "User.h"
 #include "Cart.h"
+#include "History.h"
 
 int main()
 {
